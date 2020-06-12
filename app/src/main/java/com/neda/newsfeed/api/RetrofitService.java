@@ -9,7 +9,7 @@ import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-interface RetrofitService {
+public interface RetrofitService {
     @GET("posts")
     Single<List<Post>> getAllPosts();
 

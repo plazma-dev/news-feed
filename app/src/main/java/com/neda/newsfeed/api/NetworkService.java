@@ -8,7 +8,10 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-class NetworkService {
+/**
+ * Singleton holding RetrofitService object
+ */
+public class NetworkService {
     private static NetworkService instance;
     private RetrofitService api;
 
@@ -23,16 +26,19 @@ class NetworkService {
         if (instance == null) { //if there is no instance available... create new one
             instance = new NetworkService();
         }
-
         return instance;
     }
 
     public RetrofitService getApi() {
-        if(api == null)
+        if (api == null)
             api = createApi();
         return api;
     }
 
+    /**
+     * Create retrofit api
+     * @return retrofit service instance
+     */
     @NotNull
     private RetrofitService createApi() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();

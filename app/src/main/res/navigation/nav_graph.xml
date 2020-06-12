@@ -5,6 +5,16 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.neda.newsfeed.fragments.HomeFragment"
-        android:label="HomeFragment" />
+        android:name="com.neda.newsfeed.view.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_post_dialog_fragment"
+            app:destination="@id/post_dialog_fragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/post_dialog_fragment"
+        android:name="com.neda.newsfeed.view.PostDialogFragment">
+        <argument android:name="userId"
+            app:argType="string" />
+    </dialog>
 </navigation>
