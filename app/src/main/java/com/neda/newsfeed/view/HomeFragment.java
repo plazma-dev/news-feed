@@ -61,9 +61,13 @@ public class HomeFragment extends Fragment implements PostClickListener {
     @Override
     public void onPostClicked(Post post) {
         String userId = post.getUserId();
-        Bundle bundle = new Bundle();
-        bundle.putString("userId", userId);
-        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(R.id.action_homeFragment_to_post_dialog_fragment, bundle);
+
+        HomeFragmentDirections.ActionHomeFragmentToPostDialogFragment action = HomeFragmentDirections.actionHomeFragmentToPostDialogFragment(userId);
+
+        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(action);
+
+
+
     }
 
     @Override

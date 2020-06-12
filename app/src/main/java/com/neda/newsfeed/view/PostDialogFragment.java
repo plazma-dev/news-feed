@@ -44,8 +44,10 @@ public class PostDialogFragment extends DialogFragment {
         binding = FragmentDialogBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         model = new ViewModelProvider(requireActivity()).get(DialogViewModel.class);
-        if(getArguments() != null && getArguments().containsKey("userId")) {
-            model.setUserId(getArguments().getString("userId"));
+
+        if(getArguments() != null) {
+            String userId = PostDialogFragmentArgs.fromBundle(getArguments()).getUserId();
+            model.setUserId(userId);
             observeViewModel();
         }
         return view;
