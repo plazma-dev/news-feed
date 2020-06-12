@@ -43,7 +43,6 @@ class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdapter.Pos
     public void setPosts(List<Post> posts) {
         this.posts.clear();
         this.posts.addAll(posts);
-        this.posts.addAll(posts);
     }
 
     class PostViewHolder extends RecyclerView.ViewHolder {

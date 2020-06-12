@@ -29,9 +29,9 @@ public class HomeFragment extends Fragment implements PostClickListener {
 
         prepareRecyclerView();
 
-        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        //We use Activity as owner so MainActivity can get the same instance of view model when requested
+        viewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
         observeViewModel();
-        //viewModel.loadPosts();
 
         return binding.getRoot();
     }
@@ -50,6 +50,11 @@ public class HomeFragment extends Fragment implements PostClickListener {
             // update UI
             adapter.setPosts(posts);
             adapter.notifyDataSetChanged();
+        });
+
+        viewModel.getLoading().observe(getViewLifecycleOwner(), loading -> {
+            //binding.postsRV.setVisibility(loading ? View.INVISIBLE : View.VISIBLE);
+            binding.progressBar.setVisibility(loading ? View.VISIBLE : View.INVISIBLE);
         });
     }
 

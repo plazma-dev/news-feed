@@ -24,6 +24,7 @@ public class HomeViewModel extends ViewModel {
 
     private DisposableSingleObserver<List<Post>> disposableSingleObserver;
     private MutableLiveData<List<Post>> listMutableLiveData;
+    private MutableLiveData<Boolean> loading;
 
     public LiveData<List<Post>> getListMutableLiveData() {
         if (listMutableLiveData == null) {
@@ -33,20 +34,34 @@ public class HomeViewModel extends ViewModel {
         return listMutableLiveData;
     }
 
-    private void loadPosts() {
+    public MutableLiveData<Boolean> getLoading() {
+        if (loading == null)
+            loading = new MutableLiveData<>();
+        return loading;
+    }
+
+    public void reloadPosts() {
+        loadPosts();
+    }
+
+    public void loadPosts() {
+        if (loading == null)
+            loading = new MutableLiveData<>();
+        loading.setValue(true);
         Single<List<Post>> allPosts = service.getAllPosts();
         disposableSingleObserver = allPosts.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<List<Post>>() {
                     @Override
                     public void onSuccess(List<Post> posts) {
-                        Log.d(TAG, "onSuccess");
                         listMutableLiveData.setValue(posts);
+                        loading.setValue(false);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(TAG, "onError");
+                        e.printStackTrace();
+                        loading.setValue(false);
                     }
                 });
     }

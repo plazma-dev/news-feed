@@ -43,7 +43,7 @@ public class PostDialogFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentDialogBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        model = new ViewModelProvider(this).get(DialogViewModel.class);
+        model = new ViewModelProvider(requireActivity()).get(DialogViewModel.class);
         if(getArguments() != null && getArguments().containsKey("userId")) {
             model.setUserId(getArguments().getString("userId"));
             observeViewModel();
