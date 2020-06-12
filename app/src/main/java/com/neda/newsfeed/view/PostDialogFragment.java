@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,8 +15,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.neda.newsfeed.R;
 import com.neda.newsfeed.databinding.FragmentDialogBinding;
 import com.neda.newsfeed.viewmodel.DialogViewModel;
+
+import java.util.Objects;
 
 public class PostDialogFragment extends DialogFragment {
     private final String TAG = "PostDialogFragment";
@@ -41,8 +46,8 @@ public class PostDialogFragment extends DialogFragment {
         model = new ViewModelProvider(this).get(DialogViewModel.class);
         if(getArguments() != null && getArguments().containsKey("userId")) {
             model.setUserId(getArguments().getString("userId"));
+            observeViewModel();
         }
-        observeViewModel();
         return view;
     }
 
@@ -57,9 +62,24 @@ public class PostDialogFragment extends DialogFragment {
             binding.email.setVisibility(View.VISIBLE);
         });
 
-        model.getErrorMessage().observe(getViewLifecycleOwner(), message -> {
-            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-        });
+        model.getErrorMessage().observe(getViewLifecycleOwner(), message -> Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Window window = Objects.requireNonNull(getDialog()).getWindow();
+        if(window == null) return;
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = getResources().getDimensionPixelSize(R.dimen.popup_width);
+        params.height = getResources().getDimensionPixelSize(R.dimen.popup_height);
+        window.setAttributes(params);
     }
 
     @Override
