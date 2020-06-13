@@ -16,5 +16,8 @@
         android:name="com.neda.newsfeed.view.PostDialogFragment">
         <argument android:name="userId"
             app:argType="string" />
+        <argument
+            android:name="postId"
+            app:argType="string" />
     </dialog>
 </navigation>

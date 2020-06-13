@@ -15,15 +15,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.neda.newsfeed.Injection;
 import com.neda.newsfeed.R;
 import com.neda.newsfeed.databinding.FragmentDialogBinding;
 import com.neda.newsfeed.viewmodel.DialogViewModel;
+import com.neda.newsfeed.viewmodel.ViewModelFactory;
 
 import java.util.Objects;
 
 public class PostDialogFragment extends DialogFragment {
     private final String TAG = "PostDialogFragment";
-    DialogViewModel model;
+    private DialogViewModel viewModel;
     private FragmentDialogBinding binding;
 
     @NonNull
@@ -43,18 +45,20 @@ public class PostDialogFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentDialogBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        model = new ViewModelProvider(requireActivity()).get(DialogViewModel.class);
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(requireContext());
+        viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(DialogViewModel.class);
 
         if(getArguments() != null) {
             String userId = PostDialogFragmentArgs.fromBundle(getArguments()).getUserId();
-            model.setUserId(userId);
+            String postId = PostDialogFragmentArgs.fromBundle(getArguments()).getPostId();
+            viewModel.setUserId(userId);
             observeViewModel();
         }
         return view;
     }
 
     private void observeViewModel() {
-        model.getUserMutableLiveData().observe(getViewLifecycleOwner(), user -> {
+        viewModel.getUserMutableLiveData().observe(getViewLifecycleOwner(), user -> {
             //Update UI
             Log.d(TAG, user.toString());
             binding.name.setText(user.getName());
@@ -64,7 +68,7 @@ public class PostDialogFragment extends DialogFragment {
             binding.email.setVisibility(View.VISIBLE);
         });
 
-        model.getErrorMessage().observe(getViewLifecycleOwner(), message -> Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show());
+        viewModel.getErrorMessage().observe(getViewLifecycleOwner(), message -> Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show());
     }
 
     @Override

@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.neda.newsfeed.databinding.ActivityMainBinding;
 import com.neda.newsfeed.viewmodel.HomeViewModel;
+import com.neda.newsfeed.viewmodel.ViewModelFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.refresh) {
             //Get the same HomeViewModel instance, scoped to this activity and already used by HomeFragment
-            HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+            ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
+            HomeViewModel homeViewModel = new ViewModelProvider(this, viewModelFactory).get(HomeViewModel.class);
             //Refresh list
             homeViewModel.loadPosts();
         }

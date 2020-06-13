@@ -12,10 +12,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.neda.newsfeed.Injection;
 import com.neda.newsfeed.R;
 import com.neda.newsfeed.databinding.FragmentHomeBinding;
 import com.neda.newsfeed.model.Post;
 import com.neda.newsfeed.viewmodel.HomeViewModel;
+import com.neda.newsfeed.viewmodel.ViewModelFactory;
 
 public class HomeFragment extends Fragment implements PostClickListener {
     private FragmentHomeBinding binding;
@@ -30,7 +32,8 @@ public class HomeFragment extends Fragment implements PostClickListener {
         prepareRecyclerView();
 
         //We use Activity as owner so MainActivity can get the same instance of view model when requested
-        viewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(requireContext());
+        viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(HomeViewModel.class);
         observeViewModel();
 
         return binding.getRoot();
@@ -51,23 +54,13 @@ public class HomeFragment extends Fragment implements PostClickListener {
             adapter.setPosts(posts);
             adapter.notifyDataSetChanged();
         });
-
-        viewModel.getLoading().observe(getViewLifecycleOwner(), loading -> {
-            //binding.postsRV.setVisibility(loading ? View.INVISIBLE : View.VISIBLE);
-            binding.progressBar.setVisibility(loading ? View.VISIBLE : View.INVISIBLE);
-        });
     }
 
     @Override
     public void onPostClicked(Post post) {
         String userId = post.getUserId();
-
-        HomeFragmentDirections.ActionHomeFragmentToPostDialogFragment action = HomeFragmentDirections.actionHomeFragmentToPostDialogFragment(userId);
-
+        HomeFragmentDirections.ActionHomeFragmentToPostDialogFragment action = HomeFragmentDirections.actionHomeFragmentToPostDialogFragment(userId, post.getId());
         Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(action);
-
-
-
     }
 
     @Override

@@ -7,10 +7,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.neda.newsfeed.api.NetworkService;
 import com.neda.newsfeed.api.RetrofitService;
+import com.neda.newsfeed.data_source.PostDataSource;
 import com.neda.newsfeed.model.User;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -19,9 +21,15 @@ public class DialogViewModel extends ViewModel {
     private MutableLiveData<User> userMutableLiveData;
     private MutableLiveData<String> errorMessage;
     private String userId;
+    private final PostDataSource dataSource;
 
     RetrofitService service = NetworkService.getInstance().getApi();
     private DisposableSingleObserver<User> disposableSingleObserver;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+    public DialogViewModel(PostDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public void setUserId(String userId) {
         this.userId = userId;
@@ -70,5 +78,6 @@ public class DialogViewModel extends ViewModel {
     protected void onCleared() {
         super.onCleared();
         disposableSingleObserver.dispose();
+        compositeDisposable.clear();
     }
 }
