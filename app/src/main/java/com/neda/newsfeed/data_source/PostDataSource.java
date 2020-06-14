@@ -1,15 +1,12 @@
 package com.neda.newsfeed.data_source;
 
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-
 import com.neda.newsfeed.model.Post;
 
 import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 /**
  * Access point for managing Post data.
@@ -25,8 +22,8 @@ public interface PostDataSource {
 
     /**
      * Gets post from the data source
-     * @param postId id of the post to be fetched
      *
+     * @param postId id of the post to be fetched
      * @return post from the data source
      */
     Flowable<Post> getPost(String postId);
@@ -50,4 +47,13 @@ public interface PostDataSource {
      * @return
      */
     Completable deletePost(String postId);
+
+
+    /**
+     * Delete posts that are older than given time
+     *
+     * @param time given time in millis
+     * @return number of rows affected by the query, in this case number of deleted posts from the table
+     */
+    Single<Integer> deleteExpiredPosts(long time);
 }

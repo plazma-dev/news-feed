@@ -27,6 +27,8 @@ public class Post {
     @ColumnInfo(name = "body")
     @SerializedName("body")
     private String body;
+    @ColumnInfo(name = "timestamp")
+    private long timestamp;
 
     //region Getters
     public String getUserId() {
@@ -45,6 +47,11 @@ public class Post {
     public String getBody() {
         return body;
     }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
     //endregion
 
     //region Setters
@@ -63,5 +70,10 @@ public class Post {
     public void setBody(String body) {
         this.body = body;
     }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
     //endregion
 }

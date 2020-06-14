@@ -11,6 +11,7 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 /**
  * Data Access Object for the posts table.
@@ -57,4 +58,13 @@ public interface PostDao {
      */
     @Query("DELETE FROM posts WHERE id=:postId")
     Completable deletePost(String postId);
+
+    /**
+     * Delete posts that are older than given time
+     *
+     * @param time given time in millis
+     * @return number of rows affected by the query, in this case number of deleted posts from the table
+     */
+    @Query("DELETE FROM posts WHERE timestamp < :time")
+    Single<Integer> deleteExpiredPosts(long time);
 }

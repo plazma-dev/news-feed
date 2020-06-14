@@ -1,6 +1,5 @@
 package com.neda.newsfeed.data_source;
 
-import com.neda.newsfeed.data_source.PostDataSource;
 import com.neda.newsfeed.db.PostDao;
 import com.neda.newsfeed.model.Post;
 
@@ -8,6 +7,7 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 /**
  * Using the Room database as a data source.
@@ -43,5 +43,10 @@ public class LocalPostDataSource implements PostDataSource {
     @Override
     public Completable deletePost(String postId) {
         return postDao.deletePost(postId);
+    }
+
+    @Override
+    public Single<Integer> deleteExpiredPosts(long time) {
+        return postDao.deleteExpiredPosts(time);
     }
 }

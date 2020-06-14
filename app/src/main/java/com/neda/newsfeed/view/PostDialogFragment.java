@@ -53,6 +53,10 @@ public class PostDialogFragment extends DialogFragment {
             String postId = PostDialogFragmentArgs.fromBundle(getArguments()).getPostId();
             viewModel.setUserId(userId);
             observeViewModel();
+            binding.btnDelete.setOnClickListener(b -> {
+                viewModel.deletePost(postId);
+                dismiss();
+            });
         }
         return view;
     }

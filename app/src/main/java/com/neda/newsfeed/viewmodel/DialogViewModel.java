@@ -23,7 +23,7 @@ public class DialogViewModel extends ViewModel {
     private String userId;
     private final PostDataSource dataSource;
 
-    RetrofitService service = NetworkService.getInstance().getApi();
+    private RetrofitService service = NetworkService.getInstance().getApi();
     private DisposableSingleObserver<User> disposableSingleObserver;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -41,6 +41,17 @@ public class DialogViewModel extends ViewModel {
             getUser();
         }
         return userMutableLiveData;
+    }
+
+    public void deletePost(String postId) {
+        compositeDisposable.add(dataSource.deletePost(postId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+
+
+                        },
+                        throwable -> Log.e(TAG, "Unable to delete", throwable)));
     }
 
     private void getUser() {
