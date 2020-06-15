@@ -1,4 +1,4 @@
-package com.neda.newsfeed;
+package com.neda.newsfeed.view;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.neda.newsfeed.Injection;
+import com.neda.newsfeed.R;
 import com.neda.newsfeed.databinding.ActivityMainBinding;
 import com.neda.newsfeed.viewmodel.HomeViewModel;
 import com.neda.newsfeed.viewmodel.ViewModelFactory;
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
