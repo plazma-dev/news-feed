@@ -15,7 +15,6 @@ import com.neda.newsfeed.viewmodel.ViewModelFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String TAG = "MainActivity";
     private ActivityMainBinding binding;
 
     @Override
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
             HomeViewModel homeViewModel = new ViewModelProvider(this, viewModelFactory).get(HomeViewModel.class);
             //Refresh list
-            homeViewModel.loadPosts();
+            homeViewModel.getPostsFromApi();
         }
         return true;
     }

@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment implements PostClickListener {
      * Start observing viewModel's live data
      */
     private void observeViewModel() {
-        viewModel.getListMutableLiveData().observe(getViewLifecycleOwner(), posts -> {
+        viewModel.getPostListMutableLiveData().observe(getViewLifecycleOwner(), posts -> {
             // update UI
             adapter.setPosts(posts);
             adapter.notifyDataSetChanged();
