@@ -45,7 +45,7 @@ public class PostDialogFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentDialogBinding.inflate(inflater, container, false);
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(requireContext());
-        viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(DialogViewModel.class);
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(DialogViewModel.class);
 
         if(getArguments() != null) {
             String userId = PostDialogFragmentArgs.fromBundle(getArguments()).getUserId();
@@ -72,12 +72,6 @@ public class PostDialogFragment extends DialogFragment {
         });
 
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), message -> Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show());
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
     }
 
     @Override

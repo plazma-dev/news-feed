@@ -40,6 +40,9 @@ public class HomeViewModel extends ViewModel {
     //Mutable live data observed in fragment
     private MutableLiveData<List<Post>> postListMutableLiveData;
 
+    //Mutable live data observed in fragment
+    private MutableLiveData<String> postsFetchErrorMessage;
+
     //Mutable live data - value indicates loading
     private MutableLiveData<Boolean> loading = new MutableLiveData<>();
 
@@ -70,6 +73,12 @@ public class HomeViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getLoading() {
         return loading;
+    }
+
+    public MutableLiveData<String> getPostsFetchErrorMessage() {
+        if(postsFetchErrorMessage == null)
+            postsFetchErrorMessage = new MutableLiveData<>();
+        return postsFetchErrorMessage;
     }
 
     /**
@@ -144,6 +153,7 @@ public class HomeViewModel extends ViewModel {
 
                     @Override
                     public void onError(Throwable e) {
+                        postsFetchErrorMessage.setValue(e.getLocalizedMessage());
                         e.printStackTrace();
                     }
                 });

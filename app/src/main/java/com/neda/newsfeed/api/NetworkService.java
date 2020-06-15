@@ -1,6 +1,10 @@
 package com.neda.newsfeed.api;
 
+import com.neda.newsfeed.Configuration;
+
 import org.jetbrains.annotations.NotNull;
+
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -46,7 +50,7 @@ public class NetworkService {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(loggingInterceptor);
 
-        //httpClient.readTimeout(0, TimeUnit.SECONDS).connectTimeout(0, TimeUnit.SECONDS);
+        httpClient.readTimeout(Configuration.requestTimeout, TimeUnit.SECONDS).connectTimeout(Configuration.requestTimeout, TimeUnit.SECONDS);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
