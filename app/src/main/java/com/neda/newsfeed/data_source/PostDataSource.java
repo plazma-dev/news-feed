@@ -36,11 +36,6 @@ public interface PostDataSource {
     Completable insertPosts(List<Post> posts);
 
     /**
-     * Deletes all posts from the data source.
-     */
-    void deleteAllPosts();
-
-    /**
      * Deletes post from the data source
      *
      * @param postId id of the post to be deleted

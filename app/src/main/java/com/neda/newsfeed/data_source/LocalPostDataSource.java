@@ -36,11 +36,6 @@ public class LocalPostDataSource implements PostDataSource {
     }
 
     @Override
-    public void deleteAllPosts() {
-        postDao.deletePosts();
-    }
-
-    @Override
     public Completable deletePost(String postId) {
         return postDao.deletePost(postId);
     }
