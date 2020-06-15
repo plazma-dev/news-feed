@@ -23,7 +23,7 @@ import com.neda.newsfeed.viewmodel.ViewModelFactory;
 public class HomeFragment extends Fragment implements PostClickListener {
     private FragmentHomeBinding binding;
     private HomeViewModel viewModel;
-    PostsRecyclerAdapter adapter;
+    private PostsRecyclerAdapter adapter;
 
     @Nullable
     @Override
@@ -55,6 +55,12 @@ public class HomeFragment extends Fragment implements PostClickListener {
             // update UI
             adapter.setPosts(posts);
             adapter.notifyDataSetChanged();
+            binding.progressBar.setVisibility(View.GONE);
+        });
+
+        viewModel.getLoading().observe(getViewLifecycleOwner(), loading -> {
+            if(loading)
+                binding.progressBar.setVisibility(View.VISIBLE);
         });
     }
 

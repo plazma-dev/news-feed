@@ -40,6 +40,9 @@ public class HomeViewModel extends ViewModel {
     //Mutable live data observed in fragment
     private MutableLiveData<List<Post>> postListMutableLiveData;
 
+    //Mutable live data - value indicates loading
+    private MutableLiveData<Boolean> loading = new MutableLiveData<>();
+
     /**
      * Constructor
      * @param dataSource injected data source
@@ -65,12 +68,17 @@ public class HomeViewModel extends ViewModel {
         return postListMutableLiveData;
     }
 
+    public MutableLiveData<Boolean> getLoading() {
+        return loading;
+    }
+
     /**
      * Method first executes query for deleting expired posts
      * After completion, continues with post loading from database
      */
     public void deleteExpiredPosts() {
         Log.d(TAG, "Delete expired posts");
+        loading.setValue(true);
         mDisposable.add(dataSource.deleteExpiredPosts(System.currentTimeMillis() - Configuration.postLifetime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -88,6 +96,7 @@ public class HomeViewModel extends ViewModel {
      */
     public void loadPostsFromDatabase() {
         Log.d(TAG, "Load from DB");
+        loading.setValue(true);
         mDisposable.add(dataSource.getAllPosts()
                 .map(posts -> posts)
                 .subscribeOn(Schedulers.io())
@@ -107,6 +116,7 @@ public class HomeViewModel extends ViewModel {
      * Get posts from api and save them to database
      */
     public void getPostsFromApi() {
+        loading.setValue(true);
         Log.d(TAG, "Get posts from api");
         Single<List<Post>> allPosts = service.getAllPosts();
         disposableSingleObserver = allPosts.subscribeOn(Schedulers.io())

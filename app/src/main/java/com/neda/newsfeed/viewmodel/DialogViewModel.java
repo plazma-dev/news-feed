@@ -43,17 +43,22 @@ public class DialogViewModel extends ViewModel {
         return userMutableLiveData;
     }
 
+    /**
+     * Delete post from database
+     *
+     * @param postId id of post to delete
+     */
     public void deletePost(String postId) {
         compositeDisposable.add(dataSource.deletePost(postId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {
-
-
-                        },
+                .subscribe(() -> Log.d(TAG, "Post deleted"),
                         throwable -> Log.e(TAG, "Unable to delete", throwable)));
     }
 
+    /**
+     * Fetch user from api
+     */
     private void getUser() {
         if (userMutableLiveData == null) {
             userMutableLiveData = new MutableLiveData<>();
