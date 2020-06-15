@@ -32,7 +32,7 @@ public class HomeFragment extends Fragment implements PostClickListener {
 
         prepareRecyclerView();
 
-        //We use Activity as owner so MainActivity can get the same instance of view model when requested
+        //Use Activity as owner so MainActivity can get the same instance of view model when requested
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(requireContext());
         viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(HomeViewModel.class);
         viewModel.setAlarmInstance(Alarm.getInstance(requireContext()));

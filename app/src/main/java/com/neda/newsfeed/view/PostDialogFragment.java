@@ -44,7 +44,6 @@ public class PostDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentDialogBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(requireContext());
         viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(DialogViewModel.class);
 
@@ -58,7 +57,7 @@ public class PostDialogFragment extends DialogFragment {
                 dismiss();
             });
         }
-        return view;
+        return binding.getRoot();
     }
 
     private void observeViewModel() {

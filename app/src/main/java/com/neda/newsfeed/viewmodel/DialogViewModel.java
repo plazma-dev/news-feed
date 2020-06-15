@@ -23,9 +23,9 @@ public class DialogViewModel extends ViewModel {
     private String userId;
     private final PostDataSource dataSource;
 
-    private RetrofitService service = NetworkService.getInstance().getApi();
+    private final RetrofitService service = NetworkService.getInstance().getApi();
     private DisposableSingleObserver<User> disposableSingleObserver;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public DialogViewModel(PostDataSource dataSource) {
         this.dataSource = dataSource;

@@ -1,7 +1,6 @@
 package com.neda.newsfeed.view;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -15,7 +14,7 @@ import java.util.List;
 
 class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdapter.PostViewHolder> {
     private List<Post> posts = new ArrayList<>();
-    private PostClickListener postClickListener;
+    private final PostClickListener postClickListener;
 
     public PostsRecyclerAdapter(PostClickListener postClickListener) {
         this.postClickListener = postClickListener;
@@ -24,9 +23,8 @@ class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdapter.Pos
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        PostListItemBinding binding1 = PostListItemBinding.inflate(LayoutInflater.from(parent.getContext()));
-        PostListItemBinding binding2 = PostListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new PostViewHolder(binding2);
+        PostListItemBinding binding = PostListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new PostViewHolder(binding);
 
     }
 
@@ -45,13 +43,9 @@ class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdapter.Pos
         this.posts.addAll(posts);
     }
 
-    class PostViewHolder extends RecyclerView.ViewHolder {
+    static class PostViewHolder extends RecyclerView.ViewHolder {
 
         PostListItemBinding binding;
-
-        public PostViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
 
         public PostViewHolder(PostListItemBinding binding) {
             super(binding.getRoot());
@@ -60,7 +54,7 @@ class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdapter.Pos
 
         void bind(Post post, PostClickListener postClickListener) {
             binding.postTitle.setText(post.getTitle());
-            binding.postBody.setText(post.getBody().replace("", ""));
+            binding.postBody.setText(post.getBody());
             binding.getRoot().setOnClickListener(v -> {
                 if (postClickListener != null) {
                     postClickListener.onPostClicked(post);

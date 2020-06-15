@@ -26,7 +26,7 @@ public class HomeViewModel extends ViewModel {
     private final String TAG = "HomeViewModel";
 
     //Network service instance, used for communication with api
-    private RetrofitService service = NetworkService.getInstance().getApi();
+    private final RetrofitService service = NetworkService.getInstance().getApi();
     //Data source, in this case used for communication with database
     private final PostDataSource dataSource;
     //Alarm instance for setting alarm to delete expired posts
@@ -35,7 +35,7 @@ public class HomeViewModel extends ViewModel {
     //Api
     private DisposableSingleObserver<List<Post>> disposableSingleObserver;
     //Database
-    private CompositeDisposable mDisposable = new CompositeDisposable();
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     //Mutable live data observed in fragment
     private MutableLiveData<List<Post>> postListMutableLiveData;

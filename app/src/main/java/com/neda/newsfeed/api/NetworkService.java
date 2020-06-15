@@ -23,7 +23,7 @@ public class NetworkService {
     }
 
     public static NetworkService getInstance() {
-        if (instance == null) { //if there is no instance available... create new one
+        if (instance == null) { //if there is no instance available, create new one
             instance = new NetworkService();
         }
         return instance;

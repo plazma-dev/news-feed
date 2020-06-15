@@ -12,11 +12,10 @@ public class User {
     private int id;
     @SerializedName("name")
     private String name;
-    @SerializedName("username")
-    private String username;
     @SerializedName("email")
     private String email;
 
+    //region Getters
     public int getId() {
         return id;
     }
@@ -25,13 +24,10 @@ public class User {
         return name;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
     public String getEmail() {
         return email;
     }
+    //endregion
 
     @Override
     @NonNull
@@ -39,7 +35,6 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

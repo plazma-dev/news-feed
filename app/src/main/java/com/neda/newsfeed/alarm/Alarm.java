@@ -15,7 +15,7 @@ public class Alarm {
     public static final String alarmReceiverAction = "alarmReceiverAction";
     private final int alarmRequestCode = 1234;
     private final PendingIntent alarmPendingIntent;
-    private AlarmManager alarmMgr;
+    private final AlarmManager alarmMgr;
     private final String TAG = "Alarm";
 
     public static Alarm getInstance(Context context) {
