@@ -65,6 +65,6 @@ public interface PostDao {
      * @param time given time in millis
      * @return number of rows affected by the query, in this case number of deleted posts from the table
      */
-    @Query("DELETE FROM posts WHERE timestamp < :time")
+    @Query("DELETE FROM posts WHERE timestamp <= :time")
     Single<Integer> deleteExpiredPosts(long time);
 }

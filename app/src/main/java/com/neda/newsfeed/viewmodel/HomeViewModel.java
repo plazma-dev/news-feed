@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.neda.newsfeed.data_source.PostDataSource;
+import com.neda.newsfeed.Configuration;
 import com.neda.newsfeed.api.NetworkService;
 import com.neda.newsfeed.api.RetrofitService;
 import com.neda.newsfeed.model.Post;
@@ -60,7 +61,7 @@ public class HomeViewModel extends ViewModel {
                     @Override
                     public void onSuccess(List<Post> posts) {
                         //listMutableLiveData.setValue(posts);
-                        for(Post post:posts) {
+                        for (Post post : posts) {
                             post.setTimestamp(System.currentTimeMillis());
                         }
                         mDisposable.add(insertPosts(posts)

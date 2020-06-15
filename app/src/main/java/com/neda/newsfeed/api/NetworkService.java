@@ -42,7 +42,7 @@ public class NetworkService {
     @NotNull
     private RetrofitService createApi() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
+        loggingInterceptor.level(HttpLoggingInterceptor.Level.BASIC);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(loggingInterceptor);
 
