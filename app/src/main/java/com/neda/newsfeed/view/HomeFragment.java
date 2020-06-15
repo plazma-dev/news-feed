@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.neda.newsfeed.alarm.Alarm;
 import com.neda.newsfeed.Injection;
 import com.neda.newsfeed.R;
 import com.neda.newsfeed.databinding.FragmentHomeBinding;
@@ -34,6 +35,7 @@ public class HomeFragment extends Fragment implements PostClickListener {
         //We use Activity as owner so MainActivity can get the same instance of view model when requested
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(requireContext());
         viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(HomeViewModel.class);
+        viewModel.setAlarmInstance(Alarm.getInstance(requireContext()));
         observeViewModel();
 
         return binding.getRoot();

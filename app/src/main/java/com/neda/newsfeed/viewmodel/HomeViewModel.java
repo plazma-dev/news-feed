@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.neda.newsfeed.alarm.Alarm;
 import com.neda.newsfeed.Configuration;
 import com.neda.newsfeed.api.NetworkService;
 import com.neda.newsfeed.api.RetrofitService;
@@ -28,6 +29,8 @@ public class HomeViewModel extends ViewModel {
     private RetrofitService service = NetworkService.getInstance().getApi();
     //Data source, in this case used for communication with database
     private final PostDataSource dataSource;
+    //Alarm instance for setting alarm to delete expired posts
+    private Alarm alarmInstance;
 
     //Api
     private DisposableSingleObserver<List<Post>> disposableSingleObserver;
@@ -43,6 +46,14 @@ public class HomeViewModel extends ViewModel {
      */
     public HomeViewModel(PostDataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    /**
+     * Sets alarm instance
+     * @param alarmInstance Alarm instance provided by fragment/activity
+     */
+    public void setAlarmInstance(Alarm alarmInstance) {
+        this.alarmInstance = alarmInstance;
     }
 
     public LiveData<List<Post>> getPostListMutableLiveData() {
@@ -113,6 +124,10 @@ public class HomeViewModel extends ViewModel {
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(() -> {
                                             Log.d(TAG, "Insert finished");
+                                            if (alarmInstance != null) {
+                                                //Schedule alarm to check for expired posts
+                                                alarmInstance.setAlarm();
+                                            }
                                         },
                                         Throwable::printStackTrace));
                     }
