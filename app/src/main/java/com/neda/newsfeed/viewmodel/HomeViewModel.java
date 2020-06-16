@@ -48,6 +48,7 @@ public class HomeViewModel extends ViewModel {
 
     /**
      * Constructor
+     *
      * @param dataSource injected data source
      */
     public HomeViewModel(PostDataSource dataSource) {
@@ -56,6 +57,7 @@ public class HomeViewModel extends ViewModel {
 
     /**
      * Sets alarm instance
+     *
      * @param alarmInstance Alarm instance provided by fragment/activity
      */
     public void setAlarmInstance(Alarm alarmInstance) {
@@ -76,7 +78,7 @@ public class HomeViewModel extends ViewModel {
     }
 
     public MutableLiveData<String> getPostsFetchErrorMessage() {
-        if(postsFetchErrorMessage == null)
+        if (postsFetchErrorMessage == null)
             postsFetchErrorMessage = new MutableLiveData<>();
         return postsFetchErrorMessage;
     }
@@ -111,9 +113,10 @@ public class HomeViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(posts -> {
-                            if (posts.size() > 0)
+                            if (posts.size() > 0) {
                                 postListMutableLiveData.setValue(posts);
-                            else {
+                                loading.setValue(false);
+                            } else {
                                 //Fetch posts from api only if there are no posts cached
                                 getPostsFromApi();
                             }
